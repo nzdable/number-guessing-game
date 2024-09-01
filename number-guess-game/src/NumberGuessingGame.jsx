@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaGamepad, FaRedoAlt } from 'react-icons/fa'; // Import icons
 import styles from './NumberGuessingGame.module.css';
 
 function NumberGuessingGame() {
@@ -51,7 +52,7 @@ function NumberGuessingGame() {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Number Guessing Game</h2>
+      <h2 className={styles.title}><FaGamepad /> Number Guessing Game</h2>
       <p className={styles.instructions}>Guess a number between 0 and 100</p>
       <input
         type="number"
@@ -59,6 +60,7 @@ function NumberGuessingGame() {
         onChange={handleInputChange}
         disabled={gameOver}
         className={styles.input}
+        placeholder="Enter your guess"
       />
       <button
         onClick={handleGuess}
@@ -71,7 +73,7 @@ function NumberGuessingGame() {
       <p className={styles.guessesLeft}>Guesses Left: {guessesLeft}</p>
       {gameOver && (
         <button onClick={handleRestart} className={styles.restartButton}>
-          Play Again
+          <FaRedoAlt /> Play Again
         </button>
       )}
     </div>
