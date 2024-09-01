@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaGamepad, FaRedoAlt } from 'react-icons/fa'; // Import icons
+import { FaGamepad, FaRedoAlt, FaCheck, FaTimes } from 'react-icons/fa'; // Import icons
 import styles from './NumberGuessingGame.module.css';
 
 function NumberGuessingGame() {
@@ -8,6 +8,7 @@ function NumberGuessingGame() {
   const [message, setMessage] = useState('');
   const [guessesLeft, setGuessesLeft] = useState(15);
   const [gameOver, setGameOver] = useState(false);
+  const [guessBarColor, setGuessBarColor] = useState('#ccc'); // Default color
 
   const handleInputChange = (e) => {
     setGuess(e.target.value);
@@ -25,17 +26,21 @@ function NumberGuessingGame() {
 
     if (guessNumber === targetNumber) {
       setMessage('Congratulations! You guessed the right number!');
+      setGuessBarColor('#28a745'); // Green for correct guess
       setGameOver(true);
     } else if (guessNumber > targetNumber) {
       setMessage('Too high! Try again.');
+      setGuessBarColor('#dc3545'); // Red for too high
     } else {
       setMessage('Too low! Try again.');
+      setGuessBarColor('#ffc107'); // Yellow for too low
     }
 
     setGuessesLeft(guessesLeft - 1);
 
     if (guessesLeft - 1 === 0 && guessNumber !== targetNumber) {
       setMessage(`Game over! The number was ${targetNumber}.`);
+      setGuessBarColor('#dc3545'); // Red for game over
       setGameOver(true);
     }
 
@@ -48,6 +53,7 @@ function NumberGuessingGame() {
     setMessage('');
     setGuessesLeft(15);
     setGameOver(false);
+    setGuessBarColor('#ccc'); // Reset bar color
   };
 
   return (
@@ -67,8 +73,9 @@ function NumberGuessingGame() {
         disabled={gameOver || guess === ''}
         className={styles.button}
       >
-        Guess
+        <FaCheck /> Guess
       </button>
+      <div className={styles.guessBar} style={{ backgroundColor: guessBarColor }}></div>
       <p className={styles.message}>{message}</p>
       <p className={styles.guessesLeft}>Guesses Left: {guessesLeft}</p>
       {gameOver && (
